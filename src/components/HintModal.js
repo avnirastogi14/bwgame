@@ -1,5 +1,5 @@
 import React from 'react';
-import './HintModal.css';
+import 'styles/HintModal.css';
 
 function HintModal({ male, female, genre, onClose }) {
   return (
