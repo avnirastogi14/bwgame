@@ -1,130 +1,53 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap');
 
 .movie-display-container {
-  position: relative;
-  padding: 32px 20px;
-  margin: 30px auto;
-  max-width: 900px;
-  background: #f9f9f9;
+  background-color: #ffffff;
+  padding: 30px 20px;
   border-radius: 16px;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  margin: 30px auto;
+  max-width: 600px;
 }
 
 .movie-display {
   font-family: 'Inter', sans-serif;
-  font-size: 2rem;
-  font-weight: 700;
   display: flex;
   justify-content: center;
-  align-items: center;
   flex-wrap: wrap;
-  gap: 10px;
-  line-height: 1.4;
+  gap: 12px;
 }
 
 .letter {
-  min-width: 42px;
-  height: 58px;
+  width: 48px;
+  height: 60px;
+  font-size: 1.6rem;
+  font-weight: 600;
+  border-radius: 8px;
   display: flex;
-  align-items: center;
   justify-content: center;
-  border-radius: 10px;
-  font-weight: 700;
-  font-size: 1.8rem;
-  transition: all 0.2s ease;
-  border: 2px solid transparent;
-  background-color: #e0e0e0;
-  color: #444;
-}
-
-.letter.hidden {
-  background-color: #dcdcdc;
-  border-color: #ccc;
+  align-items: center;
+  background-color: #eaeaea;
   color: transparent;
+  border: 2px solid #ccc;
+  transition: 0.3s ease;
 }
 
 .letter.revealed {
-  background-color: #4a90e2;
-  color: white;
-  border-color: #407cd9;
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
 }
 
 .letter.revealed.vowel {
   background-color: #ff9f43;
-  border-color: #f98c25;
-}
-
-.letter.revealed.number {
-  background-color: #38ada9;
-  border-color: #2e928e;
+  border-color: #ff9f43;
 }
 
 .word-break {
-  width: 32px;
-  height: 58px;
-  opacity: 0.4;
-  background-color: transparent;
+  width: 20px;
+  height: 60px;
 }
-
-.movie-display-glow {
-  display: none; /* Removed glow layer for sober version */
-}
-
-/* Responsive design for mobile screens */
-@media (max-width: 768px) {
-  .movie-display {
-    font-size: 1.4rem;
-    gap: 6px;
-  }
-
-  .letter {
-    min-width: 32px;
-    height: 44px;
-    font-size: 1.4rem;
-  }
-
-  .word-break {
-    width: 20px;
-    height: 44px;
-  }
-
-  .movie-display-container {
-    padding: 24px 12px;
-    margin: 20px 10px;
-  }
-}
-
-@media (max-width: 480px) {
-  .movie-display {
-    font-size: 1.2rem;
-    gap: 4px;
-  }
-
-  .letter {
-    min-width: 28px;
-    height: 38px;
-    font-size: 1.2rem;
-  }
-
-  .word-break {
-    width: 16px;
-    height: 38px;
-  }
-}
-@media (max-width: 360px) {
-  .movie-display {
-    font-size: 1rem;
-    gap: 2px;
-  }
-
-  .letter {
-    min-width: 24px;
-    height: 32px;
-    font-size: 1rem;
-  }
-
-  .word-break {
-    width: 12px;
-    height: 32px;
-  }
+.letter.hidden {
+  background-color: #f0f0f0;
+  border-color: #ddd;
 }
