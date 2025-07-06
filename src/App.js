@@ -17,35 +17,37 @@ function App() {
   const [score, setScore] = useState(0);
   const [round, setRound] = useState(1);
 
+  // Load CSV data from public folder
   useEffect(() => {
-  const handleKeyDown = (event) => {
-    const pressedKey = event.key.toUpperCase();
-    if (/^[A-Z]$/.test(pressedKey)) {
-      handleGuess(pressedKey);
-    }
-  };
-
-  window.addEventListener('keydown', handleKeyDown);
-
-  return () => {
-    window.removeEventListener('keydown', handleKeyDown);
-  };
-}, [guessedLetters, gameStatus, currentMovie]);
-
-  
-  useEffect(() => {
-    Papa.parse('public/data/Movies.csv', {
+    Papa.parse('/data/Movies.csv', {
       download: true,
       header: true,
       complete: (result) => {
-        setMovieList(result.data);
-      }
+        setMovieList(result.data.filter(m => m.name)); // skip empty rows
+      },
     });
   }, []);
 
+  // Start first game when movies are loaded
   useEffect(() => {
-    if (movieList.length > 0) resetGame();
+    if (movieList.length > 0) {
+      resetGame();
+    }
   }, [movieList]);
+
+  // Enable keyboard input (A-Z)
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      const pressedKey = event.key.toUpperCase();
+      if (/^[A-Z]$/.test(pressedKey)) {
+        handleGuess(pressedKey);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [guessedLetters, gameStatus, currentMovie]);
 
   const resetGame = () => {
     const random = movieList[Math.floor(Math.random() * movieList.length)];
@@ -66,7 +68,7 @@ function App() {
     if (!currentMovie || guessedLetters.includes(letter) || gameStatus !== 'playing') return;
 
     const movieTitle = currentMovie.name.toUpperCase();
-    setGuessedLetters([...guessedLetters, letter]);
+    setGuessedLetters((prev) => [...prev, letter]);
 
     if (!movieTitle.includes(letter)) {
       const newWrong = wrongGuesses + 1;
