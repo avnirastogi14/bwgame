@@ -1,22 +1,48 @@
+import React from 'react';
+import './HintModal.css';
+
 function HintModal({ male, female, genre, onClose }) {
   return (
-    <div style={{
-      position: 'fixed', top: 0, left: 0,
-      width: '100%', height: '100%',
-      background: 'rgba(0,0,0,0.8)', display: 'flex',
-      alignItems: 'center', justifyContent: 'center'
-    }}>
-      <div style={{
-        background: '#222', padding: '20px',
-        borderRadius: '10px', textAlign: 'left', color: 'white'
-      }}>
-        <h2>Need a Hint?</h2>
-        <ul>
-          <li><b>Male Lead:</b> {male}</li>
-          <li><b>Female Lead:</b> {female}</li>
-          <li><b>Genre:</b> {genre}</li>
-        </ul>
-        <button onClick={onClose}>Close Hint</button>
+    <div className="hint-modal-overlay" onClick={onClose}>
+      <div className="hint-modal-content" onClick={(e) => e.stopPropagation()}>
+        <div className="hint-modal-header">
+          <h2>🎭 Need a Hint?</h2>
+          <button className="hint-close-btn" onClick={onClose}>
+            ✕
+          </button>
+        </div>
+        
+        <div className="hint-modal-body">
+          <div className="hint-item">
+            <div className="hint-label">
+              <span className="hint-icon">👨‍🎭</span>
+              <span>Male Lead</span>
+            </div>
+            <div className="hint-value">{male}</div>
+          </div>
+          
+          <div className="hint-item">
+            <div className="hint-label">
+              <span className="hint-icon">👩‍🎭</span>
+              <span>Female Lead</span>
+            </div>
+            <div className="hint-value">{female}</div>
+          </div>
+          
+          <div className="hint-item">
+            <div className="hint-label">
+              <span className="hint-icon">🎬</span>
+              <span>Genre</span>
+            </div>
+            <div className="hint-value genre-tag">{genre}</div>
+          </div>
+        </div>
+        
+        <div className="hint-modal-footer">
+          <button className="hint-confirm-btn" onClick={onClose}>
+            Got It! 🎯
+          </button>
+        </div>
       </div>
     </div>
   );
