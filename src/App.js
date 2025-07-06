@@ -17,25 +17,25 @@ function App() {
   const [score, setScore] = useState(0);
   const [round, setRound] = useState(1);
 
-  // Load CSV data from public folder
+  // Fetch CSV
   useEffect(() => {
     Papa.parse('/data/Movies.csv', {
       download: true,
       header: true,
       complete: (result) => {
-        setMovieList(result.data.filter(m => m.name)); // skip empty rows
+        setMovieList(result.data.filter(m => m.name));
       },
     });
   }, []);
 
-  // Start first game when movies are loaded
+  // Start first round
   useEffect(() => {
     if (movieList.length > 0) {
       resetGame();
     }
   }, [movieList]);
 
-  // Enable keyboard input (A-Z)
+  // Keyboard input
   useEffect(() => {
     const handleKeyDown = (event) => {
       const pressedKey = event.key.toUpperCase();
@@ -44,9 +44,7 @@ function App() {
       }
     };
     window.addEventListener('keydown', handleKeyDown);
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, [guessedLetters, gameStatus, currentMovie]);
 
   const resetGame = () => {
@@ -59,8 +57,8 @@ function App() {
   };
 
   const nextRound = () => {
-    if (gameStatus === 'won') setScore(score + 10);
-    setRound(round + 1);
+    if (gameStatus === 'won') setScore(prev => prev + 10);
+    setRound(prev => prev + 1);
     resetGame();
   };
 
@@ -87,7 +85,7 @@ function App() {
   };
 
   return (
-    <div className="app-container">
+    <main className="app-container">
       <h1>🎬 Bolly-Wood Game</h1>
 
       <div className="scoreboard">
@@ -97,14 +95,17 @@ function App() {
 
       {currentMovie && (
         <>
-          <MovieDisplay
-            movie={currentMovie.name.toUpperCase()}
-            vowels={vowels}
-            guessed={guessedLetters}
-          />
+          <div className="movie-display-container">
+            <MovieDisplay
+              movie={currentMovie.name.toUpperCase()}
+              vowels={vowels}
+              guessed={guessedLetters}
+            />
+          </div>
+
           <WrongGuessDisplay wrongCount={wrongGuesses} />
 
-          {gameStatus === 'won' && <div className="result">🏆 You Win!</div>}
+          {gameStatus === 'won' && <div className="result win">🏆 You Win!</div>}
           {gameStatus === 'lost' && <div className="result loss">💀 Game Over!</div>}
 
           {(gameStatus === 'won' || gameStatus === 'lost') && (
@@ -123,7 +124,7 @@ function App() {
           )}
         </>
       )}
-    </div>
+    </main>
   );
 }
 
