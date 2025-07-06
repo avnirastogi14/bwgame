@@ -1,4 +1,4 @@
-function HintModal({ onClose }) {
+function HintModal({ male, female, genre, onClose }) {
   return (
     <div style={{
       position: 'fixed', top: 0, left: 0,
@@ -12,9 +12,9 @@ function HintModal({ onClose }) {
       }}>
         <h2>Need a Hint?</h2>
         <ul>
-          <li><b>Male Lead:</b> Shah Rukh Khan</li>
-          <li><b>Female Lead:</b> Kajol</li>
-          <li><b>Genre:</b> Romance</li>
+          <li><b>Male Lead:</b> {male}</li>
+          <li><b>Female Lead:</b> {female}</li>
+          <li><b>Genre:</b> {genre}</li>
         </ul>
         <button onClick={onClose}>Close Hint</button>
       </div>
