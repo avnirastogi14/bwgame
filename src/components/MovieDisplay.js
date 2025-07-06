@@ -16,9 +16,9 @@ function MovieDisplay({ movie, vowels, guessed }) {
           return (
             <span 
               key={idx} 
-              className={`letter ${isRevealed ? 'revealed' : 'hidden'} ${isVowel ? 'vowel' : ''} ${isNumber ? 'number' : ''}`}
+              className={`letter ${isRevealed ? 'revealed' : 'hidden'} ${isVowel && isRevealed ? 'vowel' : ''} ${isNumber && isRevealed ? 'number' : ''}`}
             >
-              {isRevealed ? char : ''}
+              {isRevealed ? char : '_'}
             </span>
           );
         })}
