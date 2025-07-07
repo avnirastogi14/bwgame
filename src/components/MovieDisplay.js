@@ -5,7 +5,7 @@ function MovieDisplay({ movie, vowels, guessed }) {
   return (
     <div className="movie-display">
       {movie.split(' ').map((word, wordIdx) => (
-        <div className="movie-word" key={wordIdx}>
+        <div className="movie-word-block" key={wordIdx}>
           {word.split('').map((char, idx) => {
             const isRevealed = vowels.includes(char) || guessed.includes(char);
             const isVowel = vowels.includes(char);

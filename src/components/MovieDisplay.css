@@ -186,3 +186,16 @@ body {
     padding: 6px;
   }
 }
+
+.movie-display {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.movie-word-block {
+  display: inline-flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
