@@ -1,5 +1,4 @@
 body {
-  zoom:0.8;
   margin: 0;
   padding: 0;
   background: linear-gradient(to bottom right, #0d1b2a, #1b263b);
@@ -73,7 +72,6 @@ h1 {
   gap: 20px;
   width: 100%;
   max-height: calc(100vh - 180px);
-  overflow-y: auto;
 }
 
 .movie-section {
