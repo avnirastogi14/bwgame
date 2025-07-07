@@ -6,6 +6,12 @@ body {
   font-family: 'Segoe UI', sans-serif;
   min-height: 100vh;
   overflow-x: hidden;
+  overflow-y: auto;  /* ✅ allow vertical scroll */
+  scrollbar-width: none; /* Firefox */
+}
+
+body::-webkit-scrollbar {
+  display: none; /* ✅ hide scroll bar in Chrome, Safari */
 }
 
 .app-container {
@@ -16,6 +22,12 @@ body {
   background: linear-gradient(to bottom right, #10172a, #1a2238);
   color: #fff;
   font-family: 'Inter', sans-serif;
+  overflow-y: auto;  /* ✅ ensure scrolling inside container */
+  scrollbar-width: none;
+}
+
+.app-container::-webkit-scrollbar {
+  display: none;
 }
 
 .header-section {
