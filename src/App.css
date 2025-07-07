@@ -6,12 +6,12 @@ body {
   font-family: 'Segoe UI', sans-serif;
   min-height: 100vh;
   overflow-x: hidden;
-  overflow-y: auto;  /* ✅ allow vertical scroll */
-  scrollbar-width: none; /* Firefox */
+  overflow-y: auto; 
+  scrollbar-width: none;
 }
 
 body::-webkit-scrollbar {
-  display: none; /* ✅ hide scroll bar in Chrome, Safari */
+  display: none; 
 }
 
 .app-container {
@@ -22,7 +22,7 @@ body::-webkit-scrollbar {
   background: linear-gradient(to bottom right, #10172a, #1a2238);
   color: #fff;
   font-family: 'Inter', sans-serif;
-  overflow-y: auto;  /* ✅ ensure scrolling inside container */
+  overflow-y: auto; 
   scrollbar-width: none;
 }
 
@@ -346,4 +346,17 @@ h1 {
     font-size: 0.9rem;
     padding: 8px 20px;
   }
+}
+
+body,
+.app-container {
+  -ms-overflow-style: none; 
+  scrollbar-width: none;    
+}
+
+body::-webkit-scrollbar,
+.app-container::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+  background: transparent; 
 }
