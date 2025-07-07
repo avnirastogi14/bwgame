@@ -6,16 +6,24 @@ body {
   font-family: 'Segoe UI', sans-serif;
   min-height: 100vh;
   overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
 }
 
 .app-container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  padding: 20px 40px;
+  padding: 20px;
   background: linear-gradient(to bottom right, #10172a, #1a2238);
   color: #fff;
   font-family: 'Inter', sans-serif;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
 .header-section {
@@ -52,6 +60,7 @@ h1 {
   margin: 0 auto 10px;
   width: fit-content;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  max-width: 100%;
 }
 
 .game-content {
@@ -86,6 +95,7 @@ h1 {
   padding: 15px;
   max-width: 100%;
   box-sizing: border-box;
+  width: 100%;
 }
 
 .movie-display span {
@@ -103,7 +113,7 @@ h1 {
   gap: 15px;
   width: 100%;
   max-width: 600px;
-  padding: 10px 10px;
+  padding: 10px;
 }
 
 .keyboard {
