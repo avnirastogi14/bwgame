@@ -103,10 +103,6 @@ function App() {
   return () => window.removeEventListener('keydown', handleKeyDown);
 }, [handleGuess]);
 
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [handleGuess]);
-
   return (
     <main className="app-container">
       <button className="help-button" onClick={() => setShowHelp(true)}>
