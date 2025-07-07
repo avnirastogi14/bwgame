@@ -59,7 +59,7 @@ h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   max-height: calc(100vh - 180px);
   gap: 20px;
   width: 100%;
