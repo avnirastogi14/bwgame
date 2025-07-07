@@ -20,7 +20,7 @@ body {
   flex-wrap: nowrap;
   justify-content: center;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   padding: 10px;
   font-family: 'Orbitron', monospace;
   font-size: 2rem;
@@ -70,7 +70,7 @@ body {
 }
 
 .word-break {
-  width: 18px;
+  width: 22px;
   height: 58px;
 }
 
@@ -185,17 +185,4 @@ body {
     font-size: 0.9rem;
     padding: 6px;
   }
-}
-
-.movie-display {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
-}
-
-.movie-word-block {
-  display: inline-flex;
-  gap: 6px;
-  margin-bottom: 10px;
 }
