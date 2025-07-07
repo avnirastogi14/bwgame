@@ -8,8 +8,9 @@ import HelpModal from './components/HelpModal';
 import './App.css';
 
 function App() {
-  // eslint-disable-next-line 
   const vowels = ['A', 'E', 'I', 'O', 'U'];
+  const specialChars = ['&', '#', '-', '?', '!'];
+
   const [movieList, setMovieList] = useState([]);
   const [currentMovie, setCurrentMovie] = useState(null);
   const [guessedLetters, setGuessedLetters] = useState([]);
@@ -45,28 +46,27 @@ function App() {
     setGuessedLetters(prev => [...prev, letter]);
 
     if (!title.includes(letter)) {
-  // If it's a vowel, don't penalize the player
-    if (!vowels.includes(letter)) {
-      const newWrong = wrongGuesses + 1;
-      setWrongGuesses(newWrong);
-      if (newWrong === HINT_THRESHOLD) setShowHint(true);
-      if (newWrong >= MAX_WRONG_GUESSES) setGameStatus('lost');
-    }
-  }
- else {
+      if (!vowels.includes(letter)) {
+        const newWrong = wrongGuesses + 1;
+        setWrongGuesses(newWrong);
+        if (newWrong === HINT_THRESHOLD) setShowHint(true);
+        if (newWrong >= MAX_WRONG_GUESSES) setGameStatus('lost');
+      }
+    } else {
       const hiddenCharacters = title
         .split('')
-        .filter(char => 
-          /[A-Z0-9]/.test(char) && !vowels.includes(char) && char !== ' ' 
+        .filter(char =>
+          /[A-Z0-9&#!\-?]/.test(char) && !vowels.includes(char) && char !== ' '
         );
 
       const updatedGuessedLetters = [...guessedLetters, letter];
       const allGuessed = hiddenCharacters.every(
         char => updatedGuessedLetters.includes(char)
       );
+
       if (allGuessed) setGameStatus('won');
     }
-  }, [currentMovie, guessedLetters, gameStatus, wrongGuesses, vowels, MAX_WRONG_GUESSES]);
+  }, [currentMovie, guessedLetters, gameStatus, wrongGuesses]);
 
   useEffect(() => {
     Papa.parse('/data/Movies.csv', {
@@ -87,7 +87,8 @@ function App() {
   useEffect(() => {
     const handleKeyDown = (event) => {
       const key = event.key.toUpperCase();
-      if (/^[A-Z0-9]$/.test(key)) {
+      const isAllowed = /^[A-Z0-9]$/.test(key) || ['&', '#', '-', '?', '!'].includes(key);
+      if (isAllowed) {
         handleGuess(key);
       }
     };
@@ -125,20 +126,19 @@ function App() {
 
               {gameStatus === 'won' && <div className="result win">🏆 You Win!</div>}
               {gameStatus === 'lost' && (
-                  <div className="result loss">
-                    💀 Game Over!<br />
-                    The movie was: <strong>{currentMovie.name.toUpperCase()}</strong>
-                  </div>
-                )}
-              
-              {gameStatus === 'playing' && wrongGuesses >= HINT_THRESHOLD && (
-                  <button className="hint-button" onClick={() => setShowHint(true)}>
-                    💡 Show Hint
-                  </button>
-                )}
+                <div className="result loss">💀 Game Over! The movie was: <strong>{currentMovie.name.toUpperCase()}</strong></div>
+              )}
 
               {(gameStatus === 'won' || gameStatus === 'lost') && (
-                <button className="play-again" onClick={nextRound}>▶️ Next Movie</button>
+                <button className="play-again" onClick={nextRound}>
+                  ▶️ Next Movie
+                </button>
+              )}
+
+              {showHint && gameStatus === 'playing' && (
+                <button className="hint-button" onClick={() => setShowHint(true)}>
+                  💡 Show Hint
+                </button>
               )}
             </div>
 
