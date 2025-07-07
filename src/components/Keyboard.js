@@ -5,6 +5,7 @@ function Keyboard({ onGuess, guessed, includeNumbers = true }) {
   const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
   const numbers = '0123456789'.split('');
   const vowels = ['A', 'E', 'I', 'O', 'U'];
+  const char = ['&','#','-','?','!'];
 
   return (
     <div className="keyboard-container">
@@ -33,6 +34,18 @@ function Keyboard({ onGuess, guessed, includeNumbers = true }) {
                 disabled={guessed.includes(n)}
               >
                 {n}
+              </button>
+            ))}
+          </div>
+          <div className="keyboard-grid char-grid">
+            {char.map((c) => (
+              <button
+                key={c}
+                onClick={() => onGuess(c)}
+                className={`key-button ${guessed.includes(c) ? 'disabled' : ''}`}
+                disabled={guessed.includes(c)}
+              >
+                {c}
               </button>
             ))}
           </div>
