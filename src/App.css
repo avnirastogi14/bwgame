@@ -10,10 +10,6 @@ body {
   scrollbar-width: none;
 }
 
-body::-webkit-scrollbar {
-  display: none; 
-}
-
 .app-container {
   display: flex;
   flex-direction: column;
@@ -24,10 +20,6 @@ body::-webkit-scrollbar {
   font-family: 'Inter', sans-serif;
   overflow-y: auto; 
   scrollbar-width: none;
-}
-
-.app-container::-webkit-scrollbar {
-  display: none;
 }
 
 .header-section {
