@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import Papa from 'papaparse';
 import MovieDisplay from './components/MovieDisplay';
 import Keyboard from './components/Keyboard';
-import WrongGuessDisplay from './components/WrongGuessDisplay';
+import WrongGuessDisplay, { MAX_GUESSES } from './components/WrongGuessDisplay';
 import HintModal from './components/HintModal';
-import './styles/App.css';
+import HelpModal from './components/HelpModal';
+import './App.css';
 
 function App() {
+  // eslint-disable-next-line 
   const vowels = ['A', 'E', 'I', 'O', 'U'];
   const [movieList, setMovieList] = useState([]);
   const [currentMovie, setCurrentMovie] = useState(null);
@@ -16,8 +18,56 @@ function App() {
   const [gameStatus, setGameStatus] = useState('playing');
   const [score, setScore] = useState(0);
   const [round, setRound] = useState(1);
+  const [showHelp, setShowHelp] = useState(false);
 
-  // Fetch CSV
+  const MAX_WRONG_GUESSES = MAX_GUESSES;
+  const HINT_THRESHOLD = 5;
+
+  const resetGame = useCallback(() => {
+    const random = movieList[Math.floor(Math.random() * movieList.length)];
+    setCurrentMovie(random);
+    setGuessedLetters([]);
+    setWrongGuesses(0);
+    setShowHint(false);
+    setGameStatus('playing');
+  }, [movieList]);
+
+  const nextRound = useCallback(() => {
+    if (gameStatus === 'won') setScore(prev => prev + 10);
+    setRound(prev => prev + 1);
+    resetGame();
+  }, [gameStatus, resetGame]);
+
+  const handleGuess = useCallback((letter) => {
+    if (!currentMovie || guessedLetters.includes(letter) || gameStatus !== 'playing') return;
+
+    const title = currentMovie.name.toUpperCase();
+    setGuessedLetters(prev => [...prev, letter]);
+
+    if (!title.includes(letter)) {
+  // If it's a vowel, don't penalize the player
+    if (!vowels.includes(letter)) {
+      const newWrong = wrongGuesses + 1;
+      setWrongGuesses(newWrong);
+      if (newWrong === HINT_THRESHOLD) setShowHint(true);
+      if (newWrong >= MAX_WRONG_GUESSES) setGameStatus('lost');
+    }
+  }
+ else {
+      const hiddenCharacters = title
+        .split('')
+        .filter(char => 
+          /[A-Z0-9]/.test(char) && !vowels.includes(char) && char !== ' ' 
+        );
+
+      const updatedGuessedLetters = [...guessedLetters, letter];
+      const allGuessed = hiddenCharacters.every(
+        char => updatedGuessedLetters.includes(char)
+      );
+      if (allGuessed) setGameStatus('won');
+    }
+  }, [currentMovie, guessedLetters, gameStatus, wrongGuesses, vowels, MAX_WRONG_GUESSES]);
+
   useEffect(() => {
     Papa.parse('/data/Movies.csv', {
       download: true,
@@ -28,102 +78,87 @@ function App() {
     });
   }, []);
 
-  // Start first round
   useEffect(() => {
     if (movieList.length > 0) {
       resetGame();
     }
-  }, [movieList]);
+  }, [movieList, resetGame]);
 
-  // Keyboard input
   useEffect(() => {
     const handleKeyDown = (event) => {
-      const pressedKey = event.key.toUpperCase();
-      if (/^[A-Z]$/.test(pressedKey)) {
-        handleGuess(pressedKey);
+      const key = event.key.toUpperCase();
+      if (/^[A-Z0-9]$/.test(key)) {
+        handleGuess(key);
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [guessedLetters, gameStatus, currentMovie]);
-
-  const resetGame = () => {
-    const random = movieList[Math.floor(Math.random() * movieList.length)];
-    setCurrentMovie(random);
-    setGuessedLetters([]);
-    setWrongGuesses(0);
-    setShowHint(false);
-    setGameStatus('playing');
-  };
-
-  const nextRound = () => {
-    if (gameStatus === 'won') setScore(prev => prev + 10);
-    setRound(prev => prev + 1);
-    resetGame();
-  };
-
-  const handleGuess = (letter) => {
-    if (!currentMovie || guessedLetters.includes(letter) || gameStatus !== 'playing') return;
-
-    const movieTitle = currentMovie.name.toUpperCase();
-    setGuessedLetters((prev) => [...prev, letter]);
-
-    if (!movieTitle.includes(letter)) {
-      const newWrong = wrongGuesses + 1;
-      setWrongGuesses(newWrong);
-      if (newWrong === 5) setShowHint(true);
-      if (newWrong >= 8) setGameStatus('lost');
-    } else {
-      const hiddenConsonants = movieTitle
-        .split('')
-        .filter(l => !vowels.includes(l) && l !== ' ');
-      const allGuessed = hiddenConsonants.every(
-        l => guessedLetters.includes(l) || l === letter
-      );
-      if (allGuessed) setGameStatus('won');
-    }
-  };
+  }, [handleGuess]);
 
   return (
     <main className="app-container">
-      <h1>🎬 Bolly-Wood Game</h1>
+      <button className="help-button" onClick={() => setShowHelp(true)}>
+        ?
+      </button>
+
+      <h1>🎬 BOLLYWOOD GAME</h1>
 
       <div className="scoreboard">
         <span>🎯 Score: {score}</span>
+        <span>❤️ Lives Left: {MAX_WRONG_GUESSES - wrongGuesses}</span>
         <span>🌀 Round: {round}</span>
       </div>
 
-      {currentMovie && (
-        <>
-          <div className="movie-display-container">
-            <MovieDisplay
-              movie={currentMovie.name.toUpperCase()}
-              vowels={vowels}
-              guessed={guessedLetters}
-            />
-          </div>
+      {currentMovie && <WrongGuessDisplay wrongCount={wrongGuesses} />}
 
-          <WrongGuessDisplay wrongCount={wrongGuesses} />
+      <div className="game-content">
+        {currentMovie && (
+          <>
+            <div className="movie-section">
+              <div className="movie-display-container">
+                <MovieDisplay
+                  movie={currentMovie.name.toUpperCase()}
+                  vowels={vowels}
+                  guessed={guessedLetters}
+                />
+              </div>
 
-          {gameStatus === 'won' && <div className="result win">🏆 You Win!</div>}
-          {gameStatus === 'lost' && <div className="result loss">💀 Game Over!</div>}
+              {gameStatus === 'won' && <div className="result win">🏆 You Win!</div>}
+              {gameStatus === 'lost' && (
+                  <div className="result loss">
+                    💀 Game Over!<br />
+                    The movie was: <strong>{currentMovie.name.toUpperCase()}</strong>
+                  </div>
+                )}
+              
+              {gameStatus === 'playing' && wrongGuesses >= HINT_THRESHOLD && (
+                  <button className="hint-button" onClick={() => setShowHint(true)}>
+                    💡 Show Hint
+                  </button>
+                )}
 
-          {(gameStatus === 'won' || gameStatus === 'lost') && (
-            <button className="play-again" onClick={nextRound}>▶️ Next Movie</button>
-          )}
+              {(gameStatus === 'won' || gameStatus === 'lost') && (
+                <button className="play-again" onClick={nextRound}>▶️ Next Movie</button>
+              )}
+            </div>
 
-          <Keyboard onGuess={handleGuess} guessed={guessedLetters} />
+            <div className="keyboard-section">
+              <Keyboard onGuess={handleGuess} guessed={guessedLetters} />
+            </div>
+          </>
+        )}
+      </div>
 
-          {showHint && (
-            <HintModal
-              male={currentMovie.male_lead}
-              female={currentMovie.female_lead}
-              genre={currentMovie.genre}
-              onClose={() => setShowHint(false)}
-            />
-          )}
-        </>
+      {showHint && (
+        <HintModal
+          male={currentMovie.male_lead}
+          female={currentMovie.female_lead}
+          genre={currentMovie.genre}
+          onClose={() => setShowHint(false)}
+        />
       )}
+
+      {showHelp && <HelpModal onClose={() => setShowHelp(false)} />}
     </main>
   );
 }

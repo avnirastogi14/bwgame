@@ -1,0 +1,51 @@
+.wrong-guess-tracker {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.tracker-letter {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.4rem;
+  padding: 10px 14px;
+  border-radius: 25px;
+  border: 2px solid #3fc1c9;
+  color: #3fc1c9;
+  background-color: transparent;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 5px rgba(63, 193, 201, 0.3);
+}
+
+.tracker-letter.used {
+  color: #999;
+  border-color: #555;
+  background-color: rgba(255, 0, 0, 0.1);
+  text-decoration: line-through;
+  transform: rotate(-8deg) scale(0.95);
+  opacity: 0.6;
+  animation: strikeFade 0.3s ease;
+}
+
+@keyframes strikeFade {
+  0% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1) rotate(5deg);
+  }
+  100% {
+    transform: rotate(-8deg) scale(0.95);
+    opacity: 0.6;
+  }
+}
+.wrong-guess-display {
+  font-family: 'Courier New', monospace;
+  font-size: 1.4rem;
+  letter-spacing: 5px;
+  margin-top: 20px;
+  color: #e0e1dd;
+  text-align: center;
+}

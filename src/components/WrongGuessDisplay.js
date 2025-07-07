@@ -1,18 +1,22 @@
+import React from 'react';
+import './WrongGuessDisplay.css';
+
+export const TRACKER_WORD = "BOLLY-WOOD".split('');
+export const MAX_GUESSES = TRACKER_WORD.length;
+
 function WrongGuessDisplay({ wrongCount }) {
-  const full = "BOLLY-WOOD".split('');
-  const stricken = full.map((l, i) => (
-    <span
-      key={i}
-      style={{
-        textDecoration: i < wrongCount ? 'line-through' : 'none',
-        margin: '0 5px',
-        color: i < wrongCount ? 'red' : 'white'
-      }}
-    >
-      {l}
-    </span>
-  ));
-  return <div style={{ marginTop: '15px', fontSize: '24px' }}>{stricken}</div>;
+  return (
+    <div className="wrong-guess-tracker">
+      {TRACKER_WORD.map((letter, i) => (
+        <span
+          key={i}
+          className={`tracker-letter ${i < wrongCount ? 'used' : ''}`}
+        >
+          {letter}
+        </span>
+      ))}
+    </div>
+  );
 }
 
 export default WrongGuessDisplay;

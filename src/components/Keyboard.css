@@ -1,33 +1,125 @@
-.keyboard {
+.keyboard-container {
+  padding: 0.5rem 0;
+  margin-top: 0;
+  margin-bottom: 2rem;
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
-  gap: 8px;
-  margin: 20px 0;
+  width: 100%;
+  max-width: 1000px;
 }
 
-.keyboard button {
-  width: 40px;
-  height: 40px;
-  font-size: 16px;
+.keyboard-grid {
+  display: grid;
+  gap: 15px;
+  width: 100%;
+}
+
+.alphabet-grid {
+  grid-template-columns: repeat(10, minmax(50px, 1fr)); /* 8 columns for alphabet */
+}
+
+.number-grid {
+  grid-template-columns: repeat(10, minmax(50px, 1fr)); /* Single row for numbers */
+}
+
+.key-button {
+  padding: 15px;
   border: none;
-  border-radius: 6px;
-  background-color: #f1f1f1;
-  color: #333;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #0d1b2a, #1b263b);
+  color: rgb(63, 193, 201);
+  font-size: 1.3rem;
+  font-weight: 700;
+  font-family: 'Orbitron', monospace;
+  text-shadow: 0 0 5px #00ffc3, 0 0 10px #00ffc3;
   cursor: pointer;
-  transition: 0.2s ease;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(0, 255, 195, 0.3);
 }
 
-.keyboard button:hover:not(.disabled) {
-  background-color: #e0e0e0;
+.key-button:hover {
+  background: linear-gradient(135deg, #0f3460, #1e4066);
+  transform: scale(1.1);
+  box-shadow: 0 0 20px #00ffc388, inset 0 0 10px #00ffc3;
 }
 
-.keyboard button.disabled {
-  background-color: #ccc;
+.key-button:active {
+  transform: scale(0.98);
+  box-shadow: 0 0 15px #00ffc388;
+}
+
+.key-button.disabled {
+  background: #2d2d2d;
+  color: #666;
+  text-shadow: none;
   cursor: not-allowed;
-  color: #888;
+  box-shadow: none;
+  opacity: 0.7;
 }
-.keyboard button:active:not(.disabled) {
-  transform: scale(0.95);
+
+.key-button.vowel {
+  background: linear-gradient(135deg, #ff6b6b, #ff8787);
+  color: #fff;
+  text-shadow: 0 0 5px #ff6b6b, 0 0 10px #ff6b6b;
+}
+
+.key-button.vowel:hover {
+  background: linear-gradient(135deg, #ff4c4c, #ff6b6b);
+  box-shadow: 0 0 20px #ff6b6b88, inset 0 0 10px #ff6b6b;
+}
+
+.key-button.vowel.disabled {
+  background: #4d4d2d;
+  color: #999;
+  text-shadow: none;
+  box-shadow: none;
+  opacity: 0.7;
+}
+
+@media (max-width: 768px) {
+  .keyboard-container {
+    max-width: 100%;
+  }
+
+  .alphabet-grid {
+    grid-template-columns: repeat(10, minmax(40px, 1fr)); /* Adjust for mobile */
+    gap: 10px;
+  }
+
+  .number-grid {
+    grid-template-columns: repeat(10, minmax(40px, 1fr)); /* Single row maintained */
+  }
+
+  .key-button {
+    padding: 12px;
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .keyboard-grid {
+    min-width: 350px; /* ensures the full grid doesn't shrink too small */
+  }
+
+  .keyboard-section {
+    overflow-x: auto;
+  }
+
+  .alphabet-grid {
+    grid-template-columns: repeat(10, minmax(30px, 1fr));
+  }
+
+  .number-grid {
+    grid-template-columns: repeat(5, minmax(30px, 1fr));
+  }
+
+  .key-button {
+    padding: 9px;
+    font-size: 0.7rem;
+  }
+}
+
+.keyboard-container {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
 }

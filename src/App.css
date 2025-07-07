@@ -1,0 +1,322 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to bottom right, #0d1b2a, #1b263b);
+  color: #e0e1dd;
+  font-family: 'Segoe UI', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 20px 40px;
+  background: linear-gradient(to bottom right, #10172a, #1a2238);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+}
+
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin: 10px 0;
+  color: #4de6cc;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  font-family: 'Orbitron', monospace;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-align: center;
+  animation: neonGlow 1.5s infinite alternate ease-in-out;
+}
+
+.scoreboard {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  background-color: #1b263b;
+  padding: 10px 24px;
+  border-radius: 12px;
+  color: #e0e1dd;
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin: 0 auto 10px;
+  width: fit-content;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.game-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+  max-height: calc(100vh - 180px);
+  overflow-y: auto;
+}
+
+.movie-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 800px;
+  padding: 10px;
+}
+
+.movie-display {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  font-family: 'Orbitron', monospace;
+  font-size: 1.8rem;
+  padding: 15px;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.movie-display span {
+  background-color: #1b263b;
+  padding: 5px 10px;
+  border-radius: 5px;
+  min-width: 30px;
+  text-align: center;
+}
+
+.keyboard-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  max-width: 600px;
+  padding: 10px 10px;
+}
+
+.keyboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+  gap: 8px;
+  width: 100%;
+  max-width: 500px;
+}
+
+.key {
+  padding: 10px;
+  font-size: 1rem;
+  background-color: #1b263b;
+  color: #3fc1c9;
+  border: 2px solid rgba(63, 193, 201, 0.3);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.key:hover {
+  background-color: #29a8b2;
+  transform: scale(1.05);
+}
+
+.key.disabled {
+  background-color: #0d1b2a;
+  color: #666;
+  cursor: not-allowed;
+  border-color: rgba(63, 193, 201, 0.1);
+}
+
+/* Wrong Guesses */
+.wrong-display {
+  font-family: monospace;
+  font-size: 1.2rem;
+  letter-spacing: 4px;
+  text-align: center;
+  color: #e74c3c;
+}
+
+/* Game Result */
+.result {
+  font-size: 1.6rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.result.win {
+  color: #2ecc71;
+}
+
+.result.loss {
+  color: #e74c3c;
+}
+
+.play-again {
+  padding: 10px 25px;
+  font-size: 1rem;
+  border: none;
+  background-color: #3fc1c9;
+  color: #0d1b2a;
+  font-weight: bold;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.play-again:hover {
+  background-color: #29a8b2;
+  transform: scale(1.05);
+}
+
+.play-again:active {
+  transform: scale(0.95);
+}
+
+.hint-button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  background-color: #5986ca;
+  color: #1b263b;
+  font-weight: bold;
+  border-radius: 20px;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(255, 206, 82, 0.4), inset 0 0 5px rgba(255, 206, 82, 0.6);
+  transition: all 0.2s ease;
+  font-family: 'Orbitron', monospace;
+  margin-top: 10px;
+}
+
+.hint-button:hover {
+  background-color: #298682;
+  box-shadow: 0 0 15px rgba(65, 127, 163, 0.6), inset 0 0 8px rgba(255, 206, 82, 0.8);
+  transform: scale(1.05);
+}
+
+.hint-button:active {
+  background-color: #5b94c4;
+  transform: scale(0.97);
+  box-shadow: 0 0 8px rgba(86, 72, 167, 0.4), inset 0 0 4px rgba(255, 206, 82, 0.6);
+}
+
+.help-button {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #3fc1c9;
+  background-color: #1b263b;
+  color: #3fc1c9;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.help-button:hover {
+  background-color: #3fc1c9;
+  color: #1b263b;
+  transform: scale(1.1);
+}
+
+/* Neon Glow Animation */
+@keyframes neonGlow {
+  from {
+    text-shadow: 0 0 5px #3fc1c9, 0 0 10px #3fc1c9, 0 0 15px #3fc1c9;
+  }
+  to {
+    text-shadow: 0 0 10px #4de6cc, 0 0 20px #4de6cc, 0 0 30px #4de6cc;
+  }
+}
+
+/* 📱 Mobile-Friendly Tweaks */
+@media (max-width: 768px) {
+  .app-container {
+    padding: 15px;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  .scoreboard {
+    flex-direction: column;
+    gap: 10px;
+    font-size: 0.9rem;
+  }
+
+  .movie-display {
+    font-size: 1.4rem;
+    gap: 8px;
+  }
+
+  .keyboard {
+    grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
+    max-width: 100%;
+  }
+
+  .key {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .keyboard-section {
+    padding: 0;
+    gap: 10px;
+  }
+
+  .help-button {
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .movie-display {
+    font-size: 1.2rem;
+    gap: 6px;
+  }
+
+  .keyboard {
+    grid-template-columns: repeat(auto-fit, minmax(35px, 1fr));
+    gap: 6px;
+  }
+
+  .key {
+    font-size: 0.8rem;
+    padding: 6px;
+  }
+
+  .keyboard-section {
+    gap: 8px;
+  }
+
+  .play-again {
+    font-size: 0.9rem;
+    padding: 8px 20px;
+  }
+}

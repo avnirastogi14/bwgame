@@ -11,7 +11,7 @@ function HintModal({ male, female, genre, onClose }) {
             ✕
           </button>
         </div>
-        
+
         <div className="hint-modal-body">
           <div className="hint-item">
             <div className="hint-label">
@@ -20,7 +20,7 @@ function HintModal({ male, female, genre, onClose }) {
             </div>
             <div className="hint-value">{male}</div>
           </div>
-          
+
           <div className="hint-item">
             <div className="hint-label">
               <span className="hint-icon">👩‍🎭</span>
@@ -28,7 +28,7 @@ function HintModal({ male, female, genre, onClose }) {
             </div>
             <div className="hint-value">{female}</div>
           </div>
-          
+
           <div className="hint-item">
             <div className="hint-label">
               <span className="hint-icon">🎬</span>
@@ -37,7 +37,7 @@ function HintModal({ male, female, genre, onClose }) {
             <div className="hint-value genre-tag">{genre}</div>
           </div>
         </div>
-        
+
         <div className="hint-modal-footer">
           <button className="hint-confirm-btn" onClick={onClose}>
             Got It! 🎯
