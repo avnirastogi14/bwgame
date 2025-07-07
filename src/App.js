@@ -84,14 +84,25 @@ function App() {
     }
   }, [movieList, resetGame]);
 
-  useEffect(() => {
-    const handleKeyDown = (event) => {
-      const key = event.key.toUpperCase();
-      const isAllowed = /^[A-Z0-9]$/.test(key) || ['&', '#', '-', '?', '!'].includes(key);
-      if (isAllowed) {
-        handleGuess(key);
-      }
-    };
+    useEffect(() => {
+  const handleKeyDown = (event) => {
+    let key = event.key;
+
+    // Normalize key to uppercase for letters
+    if (key.length === 1) {
+      if (/[a-z]/.test(key)) key = key.toUpperCase();
+    }
+
+    const allowed = /^[A-Z0-9]$/.test(key) || ['&', '#', '-', '?', '!'].includes(key);
+    if (allowed) {
+      handleGuess(key);
+    }
+  };
+
+  window.addEventListener('keydown', handleKeyDown);
+  return () => window.removeEventListener('keydown', handleKeyDown);
+}, [handleGuess]);
+
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handleGuess]);
