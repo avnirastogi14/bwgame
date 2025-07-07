@@ -16,7 +16,7 @@ function HintModal({ male, female, genre, onClose }) {
           <div className="hint-item">
             <div className="hint-label">
               <span className="hint-icon">👨‍🎭</span>
-              <span>Male Lead</span>
+              <span>Lead 1: </span>
             </div>
             <div className="hint-value">{male}</div>
           </div>
@@ -24,7 +24,7 @@ function HintModal({ male, female, genre, onClose }) {
           <div className="hint-item">
             <div className="hint-label">
               <span className="hint-icon">👩‍🎭</span>
-              <span>Female Lead</span>
+              <span>Lead 2:</span>
             </div>
             <div className="hint-value">{female}</div>
           </div>
