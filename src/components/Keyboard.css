@@ -76,6 +76,12 @@
   opacity: 0.7;
 }
 
+.keyboard-grid char-grid {
+  display: grid;
+  grid-template-columns: repeat(10, minmax(50px, 1fr)); /* 10 columns for special characters */
+  gap: 10px;
+}
+
 @media (max-width: 768px) {
   .keyboard-container {
     max-width: 100%;
