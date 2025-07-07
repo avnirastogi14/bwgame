@@ -25,30 +25,32 @@ function Keyboard({ onGuess, guessed, includeNumbers = true }) {
           ))}
         </div>
         {includeNumbers && (
-          <div className="keyboard-grid number-grid">
-            {numbers.map((n) => (
-              <button
-                key={n}
-                onClick={() => onGuess(n)}
-                className={`key-button ${guessed.includes(n) ? 'disabled' : ''}`}
-                disabled={guessed.includes(n)}
-              >
-                {n}
-              </button>
-            ))}
-          </div>
-          <div className="keyboard-grid char-grid">
-            {char.map((c) => (
-              <button
-                key={c}
-                onClick={() => onGuess(c)}
-                className={`key-button ${guessed.includes(c) ? 'disabled' : ''}`}
-                disabled={guessed.includes(c)}
-              >
-                {c}
-              </button>
-            ))}
-          </div>
+          <>
+            <div className="keyboard-grid number-grid">
+              {numbers.map((n) => (
+                <button
+                  key={n}
+                  onClick={() => onGuess(n)}
+                  className={`key-button ${guessed.includes(n) ? 'disabled' : ''}`}
+                  disabled={guessed.includes(n)}
+                >
+                  {n}
+                </button>
+              ))}
+            </div>
+            <div className="keyboard-grid char-grid">
+              {char.map((c) => (
+                <button
+                  key={c}
+                  onClick={() => onGuess(c)}
+                  className={`key-button ${guessed.includes(c) ? 'disabled' : ''}`}
+                  disabled={guessed.includes(c)}
+                >
+                  {c}
+                </button>
+              ))}
+            </div>
+          </>
         )}
       </div>
     </div>
