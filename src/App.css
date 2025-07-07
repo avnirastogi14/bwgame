@@ -101,7 +101,6 @@ h1 {
   align-items: center;
   justify-content: center;
   width: 100%;
-  max-width: 800px;
   padding: 10px;
 }
 
@@ -113,7 +112,7 @@ h1 {
   font-family: 'Orbitron', monospace;
   font-size: 1.8rem;
   padding: 15px;
-  max-width: 100%;
+  width: 100%;
   box-sizing: border-box;
 }
 
