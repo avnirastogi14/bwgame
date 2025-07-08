@@ -146,7 +146,7 @@ function App() {
                 </button>
               )}
 
-              {gameStatus === 'playing' && wrongGuesses >= HINT_THRESHOLD && showHint && (
+              {gameStatus === 'playing' && wrongGuesses >= HINT_THRESHOLD && !showHint && (
                 <button className="hint-button" onClick={() => setShowHint(true)}>
                   💡 Show Hint
                 </button>
