@@ -34,7 +34,13 @@ function App() {
   }, [movieList]);
 
   const nextRound = useCallback(() => {
-    if (gameStatus === 'won') setScore(prev => prev + 10);
+    if (gameStatus === 'won') {
+      const livesLeft = MAX_WRONG_GUESSES - wrongGuesses;
+      setScore(prev => prev + livesLeft);
+    }
+    if (gameStatus === 'lost') {
+      setScore(prev => Math.max(prev - 1, 0));
+    }
     setRound(prev => prev + 1);
     resetGame();
   }, [gameStatus, resetGame]);
@@ -140,7 +146,6 @@ function App() {
                 </button>
               )}
 
-              {/* Only show hint button if player is still playing and crossed hint threshold */}
               {gameStatus === 'playing' && wrongGuesses >= HINT_THRESHOLD && showHint && (
                 <button className="hint-button" onClick={() => setShowHint(true)}>
                   💡 Show Hint

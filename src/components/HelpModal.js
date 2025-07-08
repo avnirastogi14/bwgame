@@ -20,6 +20,10 @@ function HelpModal({ onClose }) {
             <li>After 5 wrong guesses, a hint will automatically appear.</li>
             <li>Win the round by guessing all the consonants and numbers in the title.</li>
             <li>You won't be penalized for any vowel you enter.</li>
+            <li>You are scored on the basis of remaining lives per round.</li>
+            <li>A failed guess reduces your points.</li>
+            <br>
+            <li>Click on 'Let's Play' button to start playing.</li>
           </ul>
         </div>
         <div className="modal-footer">
