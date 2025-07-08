@@ -13,16 +13,14 @@ function HelpModal({ onClose }) {
         </div>
         <div className="modal-body">
           <ul>
-            <li>Guess the Bollywood movie title by choosing letters and numbers.</li>
+            <li>Guess the Bollywood movie title by choosing consonants/numbers/special char.</li>
             <li>All vowels (A, E, I, O, U) are revealed for you at the start.</li>
             <li>For every incorrect guess, one letter from the word "BOLLYWOOD" will be struck out.</li>
             <li>You lose the round if all 10 letters of "BOLLYWOOD" are gone.</li>
             <li>After 5 wrong guesses, a hint will automatically appear.</li>
-            <li>Win the round by guessing all the consonants and numbers in the title.</li>
             <li>You won't be penalized for any vowel you enter.</li>
             <li>You are scored on the basis of remaining lives per round.</li>
             <li>A failed guess reduces your points.</li>
-            <br>
             <li>Click on 'Let's Play' button to start playing.</li>
           </ul>
         </div>
