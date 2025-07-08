@@ -1,7 +1,7 @@
 import React from 'react';
 import './HintModal.css';
 
-function HintModal({ male, female, genre, onClose }) {
+function HintModal({ lead1, lead2, genre, onClose }) {
   return (
     <div className="hint-modal-overlay" onClick={onClose}>
       <div className="hint-modal-content" onClick={(e) => e.stopPropagation()}>
@@ -18,7 +18,7 @@ function HintModal({ male, female, genre, onClose }) {
               <span className="hint-icon">👨‍🎭</span>
               <span>Lead 1: </span>
             </div>
-            <div className="hint-value">{male}</div>
+            <div className="hint-value">{lead1}</div>
           </div>
 
           <div className="hint-item">
@@ -26,7 +26,7 @@ function HintModal({ male, female, genre, onClose }) {
               <span className="hint-icon">👩‍🎭</span>
               <span>Lead 2:</span>
             </div>
-            <div className="hint-value">{female}</div>
+            <div className="hint-value">{lead2}</div>
           </div>
 
           <div className="hint-item">
