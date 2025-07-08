@@ -15,7 +15,8 @@ function App() {
   const [currentMovie, setCurrentMovie] = useState(null);
   const [guessedLetters, setGuessedLetters] = useState([]);
   const [wrongGuesses, setWrongGuesses] = useState(0);
-  const [showHint, setShowHint] = useState(false);
+  const [canShowHint, setCanShowHint] = useState(false);
+  const [showHintModal, setShowHintModal] = useState(false);
   const [gameStatus, setGameStatus] = useState('playing');
   const [score, setScore] = useState(0);
   const [round, setRound] = useState(1);
@@ -29,7 +30,8 @@ function App() {
     setCurrentMovie(random);
     setGuessedLetters([]);
     setWrongGuesses(0);
-    setShowHint(false);
+    setCanShowHint(false);
+    setShowHintModal(false);
     setGameStatus('playing');
   }, [movieList]);
 
@@ -43,7 +45,7 @@ function App() {
     }
     setRound(prev => prev + 1);
     resetGame();
-  }, [gameStatus, resetGame]);
+  }, [gameStatus, resetGame, wrongGuesses]);
 
   const handleGuess = useCallback((letter) => {
     if (!currentMovie || guessedLetters.includes(letter) || gameStatus !== 'playing') return;
@@ -55,6 +57,7 @@ function App() {
       if (!vowels.includes(letter)) {
         const newWrong = wrongGuesses + 1;
         setWrongGuesses(newWrong);
+        if (newWrong === HINT_THRESHOLD) setCanShowHint(true);
         if (newWrong >= MAX_WRONG_GUESSES) setGameStatus('lost');
       }
     } else {
@@ -92,11 +95,9 @@ function App() {
   useEffect(() => {
     const handleKeyDown = (event) => {
       let key = event.key;
-
-      if (key.length === 1) {
-        if (/[a-z]/.test(key)) key = key.toUpperCase();
+      if (key.length === 1 && /[a-z]/.test(key)) {
+        key = key.toUpperCase();
       }
-
       const allowed = /^[A-Z0-9]$/.test(key) || specialChars.includes(key);
       if (allowed) {
         handleGuess(key);
@@ -135,9 +136,14 @@ function App() {
                 />
               </div>
 
-              {gameStatus === 'won' && <div className="result win">🏆 You Win!</div>}
+              {gameStatus === 'won' && (
+                <div className="result win">🏆 You Win!</div>
+              )}
               {gameStatus === 'lost' && (
-                <div className="result loss">💀 Game Over! The movie was: <strong>{currentMovie.name.toUpperCase()}</strong></div>
+                <div className="result loss">
+                  💀 Game Over! The movie was:{' '}
+                  <strong>{currentMovie.name.toUpperCase()}</strong>
+                </div>
               )}
 
               {(gameStatus === 'won' || gameStatus === 'lost') && (
@@ -146,8 +152,8 @@ function App() {
                 </button>
               )}
 
-              {gameStatus === 'playing' && wrongGuesses >= HINT_THRESHOLD && !showHint && (
-                <button className="hint-button" onClick={() => setShowHint(true)}>
+              {gameStatus === 'playing' && canShowHint && !showHintModal && (
+                <button className="hint-button" onClick={() => setShowHintModal(true)}>
                   💡 Show Hint
                 </button>
               )}
@@ -160,12 +166,12 @@ function App() {
         )}
       </div>
 
-      {showHint && (
+      {showHintModal && (
         <HintModal
           lead1={currentMovie.lead1}
           lead2={currentMovie.lead2}
           genre={currentMovie.genre}
-          onClose={() => setShowHint(false)}
+          onClose={() => setShowHintModal(false)}
         />
       )}
 
