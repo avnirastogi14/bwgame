@@ -157,8 +157,8 @@ function App() {
 
       {showHint && (
         <HintModal
-          male={currentMovie.lead1}
-          female={currentMovie.lead2}
+          lead1={currentMovie.lead1}
+          lead2={currentMovie.lead2}
           genre={currentMovie.genre}
           onClose={() => setShowHint(false)}
         />
