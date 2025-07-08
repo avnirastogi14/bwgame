@@ -88,7 +88,6 @@ function App() {
   const handleKeyDown = (event) => {
     let key = event.key;
 
-    // Normalize key to uppercase for letters
     if (key.length === 1) {
       if (/[a-z]/.test(key)) key = key.toUpperCase();
     }
@@ -158,8 +157,8 @@ function App() {
 
       {showHint && (
         <HintModal
-          male={currentMovie.male_lead}
-          female={currentMovie.female_lead}
+          male={currentMovie.lead1}
+          female={currentMovie.lead2}
           genre={currentMovie.genre}
           onClose={() => setShowHint(false)}
         />
