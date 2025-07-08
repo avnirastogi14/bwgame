@@ -49,7 +49,6 @@ function App() {
       if (!vowels.includes(letter)) {
         const newWrong = wrongGuesses + 1;
         setWrongGuesses(newWrong);
-        if (newWrong === HINT_THRESHOLD) setShowHint(true);
         if (newWrong >= MAX_WRONG_GUESSES) setGameStatus('lost');
       }
     } else {
@@ -84,23 +83,23 @@ function App() {
     }
   }, [movieList, resetGame]);
 
-    useEffect(() => {
-  const handleKeyDown = (event) => {
-    let key = event.key;
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      let key = event.key;
 
-    if (key.length === 1) {
-      if (/[a-z]/.test(key)) key = key.toUpperCase();
-    }
+      if (key.length === 1) {
+        if (/[a-z]/.test(key)) key = key.toUpperCase();
+      }
 
-    const allowed = /^[A-Z0-9]$/.test(key) || ['&', '#', '-', '?', '!'].includes(key);
-    if (allowed) {
-      handleGuess(key);
-    }
-  };
+      const allowed = /^[A-Z0-9]$/.test(key) || specialChars.includes(key);
+      if (allowed) {
+        handleGuess(key);
+      }
+    };
 
-  window.addEventListener('keydown', handleKeyDown);
-  return () => window.removeEventListener('keydown', handleKeyDown);
-}, [handleGuess]);
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [handleGuess]);
 
   return (
     <main className="app-container">
@@ -141,7 +140,8 @@ function App() {
                 </button>
               )}
 
-              {showHint && gameStatus === 'playing' && (
+              {/* Only show hint button if player is still playing and crossed hint threshold */}
+              {gameStatus === 'playing' && wrongGuesses >= HINT_THRESHOLD && !showHint && (
                 <button className="hint-button" onClick={() => setShowHint(true)}>
                   💡 Show Hint
                 </button>
