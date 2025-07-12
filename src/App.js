@@ -25,9 +25,6 @@ function App() {
   const MAX_WRONG_GUESSES = MAX_GUESSES;
   const HINT_THRESHOLD = 5;
 
-  const coinSound = new Audio('/coin.mp3');
-  coinSound.volume = 0.5;
-
   const resetGame = useCallback(() => {
     const random = movieList[Math.floor(Math.random() * movieList.length)];
     setCurrentMovie(random);
@@ -41,10 +38,7 @@ function App() {
   const nextRound = useCallback(() => {
     if (gameStatus === 'won') {
       const livesLeft = MAX_WRONG_GUESSES - wrongGuesses;
-      setScore(prev => {
-        coinSound.play();
-        return prev + livesLeft;
-      });
+      setScore(prev => prev + livesLeft);
     }
     if (gameStatus === 'lost') {
       setScore(prev => Math.max(prev - 1, 0));
@@ -173,17 +167,12 @@ function App() {
       </div>
 
       {showHintModal && (
-        <>
-          <HintModal
-            lead1={currentMovie.lead1}
-            lead2={currentMovie.lead2}
-            genre={currentMovie.genre}
-            onClose={() => setShowHintModal(false)}
-          />
-          <div className="coin-box">
-            🪙 Points Earned: {score}
-          </div>
-        </>
+        <HintModal
+          lead1={currentMovie.lead1}
+          lead2={currentMovie.lead2}
+          genre={currentMovie.genre}
+          onClose={() => setShowHintModal(false)}
+        />
       )}
 
       {showHelp && <HelpModal onClose={() => setShowHelp(false)} />}
